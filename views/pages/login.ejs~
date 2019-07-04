@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+  </head>
+  <body>
+    <form action="/progress" method="post">
+      Name: <input name="name" type="text">
+    </form>
+  </body>
+</html>

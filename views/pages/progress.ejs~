@@ -1,0 +1,9 @@
+<h1>Welcome <%= userValue.name %></h1>
+<h2>Current Tasks</h2>
+<form action="" method="">
+<select>
+<% for (var i = 0; i < 3; i++) { %>
+<option> <%= userValue.task[i] %> </option>
+<% } %>
+</select>
+</form>
