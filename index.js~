@@ -29,7 +29,8 @@ express()
 		    console.log(result.rows);
 		    var data = {
 			name : result.rows[0].name,
-			task : getTasks(result.rowCount, result.rows)
+			task : getTasks(result.rowCount, result.rows),
+			size : result.rowCount
 		    };
 		    res.render('pages/progress', {
 			    userValue : data
@@ -37,6 +38,7 @@ express()
 		});
 	}
 	)
+    .get('/progress', (req, res) => res.render('pages/data'))
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 
@@ -44,7 +46,7 @@ express()
     var task = new Array();
     for (var i = 0; i < size; i++)
 	{
-	    task[i] = data[i].task + " " + data[i].duedate.getMonth() + "/" + data[i].duedate.getDate() + "/" + data[i].duedate.getFullYear();
+	    task[i] = data[i].task + " " + (data[i].duedate.getMonth() + 1) + "/" + data[i].duedate.getDate() + "/" + data[i].duedate.getFullYear();
 	}
     return task;
     }

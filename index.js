@@ -29,7 +29,8 @@ express()
 		    console.log(result.rows);
 		    var data = {
 			name : result.rows[0].name,
-			task : getTasks(result.rowCount, result.rows)
+			task : getTasks(result.rowCount, result.rows),
+			size : result.rowCount
 		    };
 		    res.render('pages/progress', {
 			    userValue : data
@@ -37,6 +38,7 @@ express()
 		});
 	}
 	)
+    .get('/data', (req, res) => res.render('pages/data'))
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 
