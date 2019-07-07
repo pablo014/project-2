@@ -1,0 +1,13 @@
+<script></script>
+Task: <input type="text"> <br>
+Due Date: <select>
+    <% for(var i=1; i<13; i++) {%>
+    <option value=<%= i %>><%= i %></option>
+    <% } %>
+    </select>
+    <select>
+    <% for(var i=1; i<32; i++) {%>
+    <option value=<%= i %>><%= i %></option>
+    <% } %>
+    </select>
+<button onclick="add()">Add Task</button>

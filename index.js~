@@ -30,15 +30,61 @@ express()
 		    var data = {
 			name : result.rows[0].name,
 			task : getTasks(result.rowCount, result.rows),
-			size : result.rowCount
+			size : result.rowCount,
+			object : result.rows
 		    };
 		    res.render('pages/progress', {
 			    userValue : data
+				
 				});
 		});
 	}
 	)
-    .get('/progress', (req, res) => res.render('pages/data'))
+    .get('/data/:data', function(req, res){
+	    var dataNew = req.params.data;
+	    var taskNew = "DELETE FROM progress WHERE studentid = " + dataNew;
+	    console.log(taskNew);
+	    var get = "SELECT name FROM progress WHERE studentid = " + dataNew;
+	    pool.query(get, function(err, result) {
+		    if (err) {
+                        console.log("Error in query: ")
+                            console.log(err);
+                    }
+		    var name = result.rows[0].name;
+
+		    console.log(name);
+		    pool.query("SELECT * FROM progress WHERE name ='" + name + "'", function(err, result) {
+			    if (err) {
+				console.log("Error in query: ")
+				    console.log(err);
+			    }
+			    console.log("Back from DB with result:");
+			    console.log(result.rows);
+			    var data = {
+				task : getTasks(result.rowCount, result.rows),
+				size : result.rowCount,
+				object : result.rows,
+				skip : dataNew
+			    };
+			    res.render('pages/data', {
+				    userValue : data
+
+					});
+
+			});
+		    pool.query(taskNew, function(err, result){
+                            if (err) {
+                                console.log("Error in query: ")
+                                    console.log(err);
+                            }
+                            console.log(result);
+                            console.log("Successfully Deleted");
+                        });
+		});	    
+	})
+    .get('/add', function(req, res){
+	    res.render('pages/add')
+	})
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 
