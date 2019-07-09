@@ -28,7 +28,7 @@ express()
 		    console.log("Back from DB with result:");
 		    console.log(result.rows);
 		    var data = {
-			name : result.rows[0].name,
+			name : req.body.name,
 			task : getTasks(result.rowCount, result.rows),
 			size : result.rowCount,
 			object : result.rows
@@ -82,8 +82,16 @@ express()
                         });
 		});	    
 	})
-    .get('/add', function(req, res){
-	    res.render('pages/add')
+    .get('/add/:name', function(req, res){
+	    var name = {
+		name : req.params.name
+	    };
+	    res.render('pages/add', {
+		name : name
+			});
+	})
+    .get('/addTask/:json', function(req, res){
+	    var info = req.params.json;
 	})
     .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
